@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+<record id="action_report_autorizacion" model="ir.actions.report">
+        <!-- Nombre del informe que se verá en el botón Imprimir -->
+        <field name="name">Informe de la Autorizacion</field>
+
+        <!-- Nombre técnico del modelo sobre el que se genera el informe -->
+        <field name="model">participantes.autorizacion</field>
+
+        <!-- Tipo de reporte: puede ser qweb-pdf o qweb-html -->
+        <field name="report_type">qweb-pdf</field>
+
+        <!-- Nombre técnico de la plantilla QWeb -->
+        <field name="report_name">participantes.report_autorizacion</field>
+
+        <field name="report_file">participantes.report_autorizacion</field>
+        <!-- Enlace entre la acción y el modelo -->
+        <field name="binding_model_id" ref="participantes.model_participantes_autorizacion"/>
+        <field name="binding_type">report</field>
+    </record>
+
+  
+    <!-- ============================== -->
+    <!--   PLANTILLA QWEB DEL INFORME   -->
+    <!-- ============================== -->
+    <template id="report_autorizacion">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="exc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <!-- Encabezado principal -->
+                        <h2 style="text-align:center;">Ficha de Autorizacion Escolar</h2>
+                        <br/>
+
+                        <!-- Información general -->
+                        <h4>Datos generales</h4>
+                        <table class="table table-sm table-bordered" style="width:100%;">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Nombre Tutor:</strong></td>
+                                    <td><t t-esc="exc.tutorAlumno"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Telefono:</strong></td>
+                                    <td><t t-esc="exc.telefono"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Dirección:</strong></td>
+                                    <td><t t-esc="exc.direccion"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email del Tutor:</strong></td>
+                                    <td><t t-esc="exc.email"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fecha de la Firma:</strong></td>
+                                    <td><t t-esc="exc.diaAutorizar"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+
+                        <!-- Información del destino -->
+                        <h4>Alumno</h4>
+                        <table class="table table-sm table-bordered" style="width:100%;">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Nombre:</strong></td>
+                                    <td><t t-esc="exc.alumno_id.nombreAlumno"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Apellidos:</strong></td>
+                                    <td><t t-esc="exc.alumno_id.apellidoAlumno"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fecha Nacimiento:</strong></td>
+                                    <td><t t-esc="exc.alumno_id.fechaAlumno"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Curso Actual:</strong></td>
+                                    <td><t t-esc="exc.alumno_id.cursoAlumno"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+
+                        <!-- Profesor responsable -->
+                        <h4>Excursiones Autorizadas</h4>
+                        <table class="table table-sm table-bordered" style="width:100%;">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Nombre:</strong></td>
+                                    <td><t t-esc="exc.alumno_id.excursiones_ids.nombre"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fecha a Realizar:</strong></td>
+                                    <td><t t-esc="exc.alumno_id.excursiones_ids.fecha"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

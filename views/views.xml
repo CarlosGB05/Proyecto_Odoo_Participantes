@@ -1,0 +1,119 @@
+<odoo>
+  <data>
+    
+    <!-- LISTA ALUMNOS -->
+    <record id="view_alumno_list" model="ir.ui.view">
+      <field name="name">participantes.alumno.list</field>
+      <field name="model">participantes.alumno</field>
+      <field name="arch" type="xml">
+        <list string="Alumno">
+          <field name="nombreAlumno"/>
+          <field name="apellidoAlumno"/>
+          <field name="fechaAlumno"/>
+          <field name="cursoAlumno"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- FORMULARIO ALUMNOS -->
+    <record id="view_alumno_form" model="ir.ui.view">
+      <field name="name">participantes.alumno.form</field>
+      <field name="model">participantes.alumno</field>
+      <field name="arch" type="xml">
+        <form string="Alumno">
+          <sheet>
+            <group>
+              <field name="nombreAlumno"/>
+              <field name="apellidoAlumno"/>
+              <field name="fechaAlumno"/>
+              <field name="cursoAlumno"/>
+            </group>
+            <notebook>
+              <page string="Excursiones disponibles">
+                <field name="excursiones_ids"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- LISTA AUTORIZACION -->
+    <record id="view_autorizacion_list" model="ir.ui.view">
+      <field name="name">participantes.autorizacion.list</field>
+      <field name="model">participantes.autorizacion</field>
+      <field name="arch" type="xml">
+        <list string="Autorizacion Alumno">
+          <field name="tutorAlumno"/>
+          <field name="telefono"/>
+          <field name="email"/>
+          <field name="diaAutorizar"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- FORMULARIO AUTORIZACION -->
+    <record id="view_autorizacion_form" model="ir.ui.view">
+      <field name="name">participantes.autorizacion.form</field>
+      <field name="model">participantes.autorizacion</field>
+      <field name="arch" type="xml">
+        <form string="Autorizaciones">
+          <header>
+            <!-- Botón visible solo cuando el registro está guardado -->
+            <button name="%(action_report_autorizacion)d"
+                    string="Imprimir Ficha"
+                    type="action"
+                    class="oe_highlight"
+                    icon="fa-print"/>
+          </header>
+          <sheet>
+            <group>
+              <field name="tutorAlumno"/>
+              <field name="telefono"/>
+              <field name="direccion"/>
+              <field name="email"/>
+              <field name="diaAutorizar"/>
+            </group>
+            <notebook>
+              <page string="Alumno del Tutor">
+                <field name="alumno_id"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- ACCIONES -->
+    <record id="action_alumno" model="ir.actions.act_window">
+      <field name="name">Alumnos</field>
+      <field name="res_model">participantes.alumno</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_autorizacion" model="ir.actions.act_window">
+      <field name="name">Autorizaciones</field>
+      <field name="res_model">participantes.autorizacion</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- MENÚS -->
+    <menuitem id="menu_participacion_root" name="Gestión de Participantes"/>
+
+    <menuitem id="menu_participacion_root" name="Gestión de Participantes"
+      web_icon="participantes,static/descripcion/icono.png"/>
+
+    <menuitem id="menu_alumnos"
+              name="Alumnos"
+              parent="menu_participacion_root"
+              action="action_alumno"/>
+
+    <menuitem id="menu_autorizaciones"
+              name="Autorizaciones"
+              parent="menu_participacion_root"
+              action="action_autorizacion"/>
+
+  </data>
+</odoo>
