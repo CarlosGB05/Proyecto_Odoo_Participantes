@@ -3,6 +3,7 @@
 from odoo import models, fields, api, exceptions
 from datetime import date
 from dateutil.relativedelta import relativedelta
+import re
 
 class Alumno(models.Model):
     _name = 'participantes.alumno'
@@ -57,4 +58,16 @@ class Autorizacion(models.Model):
         for autorizacion in self:
             if (autorizacion.diaAutorizar > hoy):
                 raise exceptions.ValidationError(" La Fecha de la Autorizacion debe ser igual o inferior a Hoy.")
+
+    @api.constrains('telefono')
+    def _check_telefono(self):
+        for profe in self:
+            if profe.telefono and (not profe.telefono.isdigit() or len(profe.telefono) != 9):
+                raise exceptions.ValidationError("El Teléfono debe contener exactamente 9 números.")
+
+    @api.constrains('email')
+    def _check_email(self):
+        for profe in self:
+            if profe.email and '@' not in profe.email:
+                raise exceptions.ValidationError("El Correo Electrónico debe contener un '@'.")
 
